@@ -12,7 +12,7 @@ class CartItem {
 }
 
 class CoffeeShop extends ChangeNotifier {
-//coffee for sale list 
+  //coffee for sale list
   final List<Coffee> _shop = [
     //black coffee 
     Coffee(
@@ -47,20 +47,16 @@ class CoffeeShop extends ChangeNotifier {
   
   ];
 
-//user cart 
- final List<CartItem> _userCart = []; //empty at the beginning
+  //user cart
+  final List<CartItem> _userCart = []; //empty at the beginning
 
-//get coffee list 
- List<Coffee> get coffeeShop => _shop;
+  //get coffee list
+  List<Coffee> get coffeeShop => _shop;
 
-//get user cart 
-List<CartItem> get userCart => _userCart;
+  //get user cart
+  List<CartItem> get userCart => _userCart;
 
-//add item to cart
-// void addItemToCart(Coffee coffee) {
-//   _userCart.add(coffee);
-//   notifyListeners();
-// }
+  //add item to cart
   void addItemToCart(Coffee coffee) {
     // Check if the coffee is already in the cart
     for (CartItem cartItem in _userCart) {
@@ -77,11 +73,7 @@ List<CartItem> get userCart => _userCart;
     notifyListeners();
   }
 
-//remove item from cart 
-// void removeItemFromCart(Coffee coffee){
-//   _userCart.remove(coffee);
-//   notifyListeners();
-// }
+  //remove item from cart
   void removeItemFromCart(Coffee coffee) {
     for (CartItem cartItem in _userCart) {
       if (cartItem.coffee == coffee) {
@@ -97,4 +89,16 @@ List<CartItem> get userCart => _userCart;
       }
     }
   }
+
+  //calculate total
+  double calculateTotal() {
+    double total = 0.0;
+    for (CartItem cartItem in _userCart) {
+      List<String> parts = cartItem.coffee.price.split(' ');
+      double price = double.parse(parts[0]);
+      total += price * cartItem.quantity;
+    }
+    return total;
+  }
+
 }
