@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:async'; // Importez cette bibliothèque pour utiliser Future et Timer
+
 
 import '../components/coffee_tile.dart';
 import '../models/coffee.dart';
@@ -16,6 +18,19 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   void removeFromCart(Coffee coffee) {
     Provider.of<CoffeeShop>(context, listen: false).removeItemFromCart(coffee);
+
+    //let user know the remove is successful
+    showDialog(context: context, builder: (context)=> const AlertDialog(
+      title: Text("Successfully removed from cart",
+        style: TextStyle(fontSize: 16.0),
+        textAlign: TextAlign.center,
+      ),
+    ),);
+
+    // Fermer la boîte de dialogue après un délai (par exemple, 2 secondes)
+    Timer(const Duration(seconds: 1), () {
+      Navigator.of(context).pop(); // Fermer la boîte de dialogue
+    });
   }
 
   void payNow() {
@@ -33,21 +48,27 @@ class _CartPageState extends State<CartPage> {
           padding: const EdgeInsets.all(25.0),
           child: Column(
             children: [
-              Text(
-                "Your Cart",
-                style: const TextStyle(fontSize: 20),
+              const Text(
+                "Your Cart", 
+                style: TextStyle(fontSize: 20),
               ),
               Expanded(
                 child: ListView.builder(
                   itemCount: value.userCart.length,
                   itemBuilder: (context, index) {
-                    Coffee eachCoffee = value.userCart[index];
-                    return CoffeeTile(
-                      coffee: eachCoffee,
-                      onPressed: () => removeFromCart(eachCoffee),
-                      icon: const Icon(Icons.delete),
-                    );
-                  },
+                    
+                //get individual cart items
+                CartItem cartItem = value.userCart[index];
+
+                //return the coffee tile
+                return CoffeeTile(
+                  item: cartItem,
+                  onPressed: () => removeFromCart(cartItem.coffee), // Display the quantity
+                  icon: Icon(Icons.delete),
+                  quantity: cartItem.quantity,
+                );
+                
+              },
                 ),
               ),
               GestureDetector(
@@ -73,4 +94,5 @@ class _CartPageState extends State<CartPage> {
       ),
     );
   }
+
 }

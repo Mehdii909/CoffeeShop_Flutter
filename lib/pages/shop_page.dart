@@ -2,6 +2,8 @@ import 'package:coffeeshop_flutter/components/coffee_tile.dart';
 import 'package:coffeeshop_flutter/models/coffee_shop.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:async'; // Importez cette bibliothèque pour utiliser Future et Timer
+
 
 import '../models/coffee.dart';
 
@@ -20,11 +22,19 @@ class _ShopPageState extends State<ShopPage> {
     //add to cart action
     Provider.of<CoffeeShop>(context, listen: false).addItemToCart(coffee);
 
-    //let user know the add is successful 
-    showDialog(context: context, builder: (context)=> AlertDialog(
-      title: Text("Successfully added to cart"),
-    ),
-    );
+    //let user know the add is successful
+    showDialog(context: context, builder: (context) =>
+    const AlertDialog(
+      title: Text("Successfully added to cart",
+        style: TextStyle(fontSize: 16.0),
+        textAlign: TextAlign.center,
+      ),
+    ),);
+
+    // Fermer la boîte de dialogue après un délai (par exemple, 2 secondes)
+    Timer(const Duration(seconds: 1), () {
+      Navigator.of(context).pop(); // Fermer la boîte de dialogue
+    });
   }
 
   @override
@@ -50,11 +60,9 @@ class _ShopPageState extends State<ShopPage> {
               //get indiv coffee
               Coffee eachCoffee = value.coffeeShop[index];
 
-
-
               //return coffee tile
               return CoffeeTile(
-                coffee: eachCoffee,
+                item: eachCoffee,
                 icon: Icon(Icons.add),
                 onPressed: ()=> addToCart(eachCoffee),
                 );

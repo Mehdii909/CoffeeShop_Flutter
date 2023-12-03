@@ -4,7 +4,9 @@ class Coffee {
   final String imagePath ;
 
   Coffee({
-    required this.name, required this.price, required this.imagePath
+    required this.name,
+    required this.price,
+    required this.imagePath,
     });
 
 

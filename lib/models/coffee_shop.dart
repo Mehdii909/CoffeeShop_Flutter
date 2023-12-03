@@ -1,6 +1,16 @@
 import 'package:coffeeshop_flutter/models/coffee.dart';
 import 'package:flutter/material.dart';
 
+class CartItem {
+  Coffee coffee;
+  int quantity;
+
+  CartItem({
+    required this.coffee,
+    required this.quantity,
+  });
+}
+
 class CoffeeShop extends ChangeNotifier {
 //coffee for sale list 
   final List<Coffee> _shop = [
@@ -38,24 +48,53 @@ class CoffeeShop extends ChangeNotifier {
   ];
 
 //user cart 
- List<Coffee> _userCart = []; //empty at the beginning 
+ final List<CartItem> _userCart = []; //empty at the beginning
 
 //get coffee list 
  List<Coffee> get coffeeShop => _shop;
 
 //get user cart 
-List<Coffee> get userCart => _userCart;
+List<CartItem> get userCart => _userCart;
 
-//add item to cart 
-void addItemToCart(Coffee coffee) {
-  _userCart.add(coffee);
-  notifyListeners();
-}
+//add item to cart
+// void addItemToCart(Coffee coffee) {
+//   _userCart.add(coffee);
+//   notifyListeners();
+// }
+  void addItemToCart(Coffee coffee) {
+    // Check if the coffee is already in the cart
+    for (CartItem cartItem in _userCart) {
+      if (cartItem.coffee == coffee) {
+        // If yes, just increase the quantity
+        cartItem.quantity++;
+        notifyListeners();
+        return;
+      }
+    }
+
+    // If not, add a new item to the cart
+    _userCart.add(CartItem(coffee: coffee, quantity: 1));
+    notifyListeners();
+  }
 
 //remove item from cart 
-void removeItemFromCart(Coffee coffee){
-  _userCart.remove(coffee);
-  notifyListeners();
-}
-
+// void removeItemFromCart(Coffee coffee){
+//   _userCart.remove(coffee);
+//   notifyListeners();
+// }
+  void removeItemFromCart(Coffee coffee) {
+    for (CartItem cartItem in _userCart) {
+      if (cartItem.coffee == coffee) {
+        if (cartItem.quantity > 1) {
+          // If the quantity is more than 1, decrease it
+          cartItem.quantity--;
+        } else {
+          // If the quantity is 1, remove the entire item
+          _userCart.remove(cartItem);
+        }
+        notifyListeners();
+        return;
+      }
+    }
+  }
 }
