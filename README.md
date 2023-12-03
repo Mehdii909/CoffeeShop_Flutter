@@ -2,6 +2,11 @@
 
 A new Flutter project.
 
+![Image 1](lib/images/SplashScreen.png)
+![Image 1](lib/images/Shop_page.png)
+![Image 1](lib/images/payment_page.png)
+![Image 1](lib/images/Cart_page.png)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
