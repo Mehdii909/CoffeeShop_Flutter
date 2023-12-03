@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:coffeeshop_flutter/const.dart';
 import 'home_page.dart';
-import 'package:flutter_emoji/flutter_emoji.dart';
+//import 'package:flutter_emoji/flutter_emoji.dart';
 
 
 class SplashScreen extends StatefulWidget {

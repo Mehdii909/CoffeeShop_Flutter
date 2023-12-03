@@ -1,23 +1,21 @@
-import 'package:coffeeshop_flutter/components/coffee_tile.dart';
-import 'package:coffeeshop_flutter/models/coffee_shop.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:async'; // Importez cette bibliothèque pour utiliser Future et Timer
 
 
+import '../components/coffee_tile.dart';
 import '../models/coffee.dart';
+import '../models/coffee_shop.dart';
+import 'payment.dart';
 
-class CartPage extends StatefulWidget{
-  const CartPage ({super.key});
+class CartPage extends StatefulWidget {
+  const CartPage({Key? key}) : super(key: key);
 
   @override
   State<CartPage> createState() => _CartPageState();
-
 }
 
 class _CartPageState extends State<CartPage> {
-
-  //remove item from cart 
   void removeFromCart(Coffee coffee) {
     Provider.of<CoffeeShop>(context, listen: false).removeItemFromCart(coffee);
 
@@ -35,31 +33,30 @@ class _CartPageState extends State<CartPage> {
     });
   }
 
-  //pay button tapped
-  void payNow () {
-    //add payment service later
+  void payNow() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const Payment()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-      return Consumer<CoffeeShop>(
-        builder: (context, value, child) => SafeArea(
+    return Consumer<CoffeeShop>(
+      builder: (context, value, child) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(25.0),
           child: Column(
             children: [
-
-              //heading
               const Text(
                 "Your Cart", 
                 style: TextStyle(fontSize: 20),
               ),
-
-              //list of cart items
               Expanded(
                 child: ListView.builder(
                   itemCount: value.userCart.length,
                   itemBuilder: (context, index) {
+                    
                 //get individual cart items
                 CartItem cartItem = value.userCart[index];
 
@@ -74,34 +71,28 @@ class _CartPageState extends State<CartPage> {
               },
                 ),
               ),
-
-
-              //pay button
               GestureDetector(
                 onTap: payNow,
                 child: Container(
                   padding: const EdgeInsets.all(25),
-                
                   width: double.infinity,
-                  decoration: BoxDecoration(color: Colors.brown, 
-                borderRadius: BorderRadius.circular(12),
-                ),
+                  decoration: BoxDecoration(
+                    color: Colors.brown,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   child: const Center(
                     child: Text(
-                      "Proceed payment", 
+                      "Proceed payment",
                       style: TextStyle(color: Colors.white),
-                      ),
+                    ),
                   ),
-                
                 ),
-              )
-
-
+              ),
             ],
           ),
         ),
       ),
-        );
+    );
   }
 
 }
