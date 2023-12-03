@@ -50,7 +50,7 @@ class _CartPageState extends State<CartPage> {
             children: [
 
               //heading
-              Text(
+              const Text(
                 "Your Cart", 
                 style: TextStyle(fontSize: 20),
               ),
@@ -61,14 +61,15 @@ class _CartPageState extends State<CartPage> {
                   itemCount: value.userCart.length,
                   itemBuilder: (context, index) {
                 //get individual cart items
-                Coffee eachCoffee = value.userCart[index];
+                CartItem cartItem = value.userCart[index];
 
                 //return the coffee tile
                 return CoffeeTile(
-                  coffee: eachCoffee,
-                  onPressed: () => removeFromCart(eachCoffee), // Display the quantity
+                  item: cartItem,
+                  onPressed: () => removeFromCart(cartItem.coffee), // Display the quantity
                   icon: Icon(Icons.delete),
-                  );
+                  quantity: cartItem.quantity,
+                );
                 
               },
                 ),

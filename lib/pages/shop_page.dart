@@ -60,11 +60,9 @@ class _ShopPageState extends State<ShopPage> {
               //get indiv coffee
               Coffee eachCoffee = value.coffeeShop[index];
 
-
-
               //return coffee tile
               return CoffeeTile(
-                coffee: eachCoffee,
+                item: eachCoffee,
                 icon: Icon(Icons.add),
                 onPressed: ()=> addToCart(eachCoffee),
                 );
