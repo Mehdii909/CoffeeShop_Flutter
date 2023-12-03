@@ -2,6 +2,8 @@ import 'package:coffeeshop_flutter/components/coffee_tile.dart';
 import 'package:coffeeshop_flutter/models/coffee_shop.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:async'; // Importez cette bibliothèque pour utiliser Future et Timer
+
 
 import '../models/coffee.dart';
 
@@ -18,6 +20,19 @@ class _CartPageState extends State<CartPage> {
   //remove item from cart 
   void removeFromCart(Coffee coffee) {
     Provider.of<CoffeeShop>(context, listen: false).removeItemFromCart(coffee);
+
+    //let user know the remove is successful
+    showDialog(context: context, builder: (context)=> const AlertDialog(
+      title: Text("Successfully removed from cart",
+        style: TextStyle(fontSize: 16.0),
+        textAlign: TextAlign.center,
+      ),
+    ),);
+
+    // Fermer la boîte de dialogue après un délai (par exemple, 2 secondes)
+    Timer(const Duration(seconds: 1), () {
+      Navigator.of(context).pop(); // Fermer la boîte de dialogue
+    });
   }
 
   //pay button tapped
@@ -51,12 +66,12 @@ class _CartPageState extends State<CartPage> {
                 //return the coffee tile
                 return CoffeeTile(
                   coffee: eachCoffee,
-                  onPressed: () => removeFromCart(eachCoffee), 
+                  onPressed: () => removeFromCart(eachCoffee), // Display the quantity
                   icon: Icon(Icons.delete),
                   );
                 
               },
-              ),
+                ),
               ),
 
 
