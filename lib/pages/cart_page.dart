@@ -4,6 +4,7 @@ import 'dart:async'; // Importez cette bibliothèque pour utiliser Future et Tim
 
 
 import '../components/coffee_tile.dart';
+import '../models/cart_item.dart';
 import '../models/coffee.dart';
 import '../models/coffee_shop.dart';
 import 'payment.dart';

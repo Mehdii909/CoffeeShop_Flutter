@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 
+import "../models/cart_item.dart";
 import "../models/coffee.dart";
 import "../models/coffee_shop.dart";
 

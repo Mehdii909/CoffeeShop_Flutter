@@ -1,15 +1,7 @@
 import 'package:coffeeshop_flutter/models/coffee.dart';
 import 'package:flutter/material.dart';
 
-class CartItem {
-  Coffee coffee;
-  int quantity;
-
-  CartItem({
-    required this.coffee,
-    required this.quantity,
-  });
-}
+import 'cart_item.dart';
 
 class CoffeeShop extends ChangeNotifier {
   //coffee for sale list
